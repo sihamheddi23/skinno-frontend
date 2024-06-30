@@ -1,11 +1,10 @@
 import Table from "../Table"
 
-function ProdcutManager({ products }: any) {
+function OrderManager() {
   return (
     <div className="p-4">
       <div className="flex justify-between mx-4 my-2">
-        <h1 className="text-2xl font-bold mb-4">Products</h1>
-        <button className="bg-black text-white p-2 rounded">Add Product</button>
+        <h1 className="text-2xl font-bold mb-4">Orders</h1>
        </div>
       <div className="overflow-x-auto">
         <Table />
@@ -13,4 +12,4 @@ function ProdcutManager({ products }: any) {
     </div>  )
 }
 
-export default ProdcutManager
+export default OrderManager

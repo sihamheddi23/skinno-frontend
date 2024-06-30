@@ -7,6 +7,8 @@ import ProductAdmin from './pages/ProductAdmin';
 import SearchProductsPage from './pages/SearchProductsPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
 import AIChatPage from './pages/AIChatPage';
+import OrdersPage from './pages/OrdersPage';
+import CompanyInfoPage from './pages/companyInfoAdmin';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
 
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/dashboard/products" element={<ProductAdmin />} />
+          <Route path="/dashboard/orders" element={<OrdersPage />} />
+          <Route path="/dashboard/about-company" element={<CompanyInfoPage />} />
 
         </Routes>
       </div>
