@@ -36,7 +36,7 @@ const RegisterPage = () => {
       console.log("values ", values);
       
       axiosConfig
-        .post("/api/v1/auth/register", values)
+        .post("/auth/register", values)
         .then(() => {
           alertSuccess("you have been registered successfully");
           setTimeout(() => {

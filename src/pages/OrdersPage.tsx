@@ -6,7 +6,7 @@ function OrdersPage() {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow  bg-slate-100">
         <Header />
         <OrderManager  />
       </div>
