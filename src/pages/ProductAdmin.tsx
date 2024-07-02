@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from '../components/admin/Sidebar';
 import Header from '../components/admin/Header';
 import ProdcutManager from '../components/admin/Products/ProdcutManager';
+import { useAppSelector } from '../store';
 
 const ProductsAdmin = () => {
   const [products, setProducts] = useState([]);
+  const themeState = useAppSelector((state) => state.theme)
 
   useEffect(() => {
     // Mock data fetch. Replace with real API call.
@@ -25,7 +27,7 @@ const ProductsAdmin = () => {
   return (
      <div className="flex">
       <Sidebar />
-      <div className="flex flex-col flex-grow  bg-slate-100">
+      <div className={themeState.theme === "light" ? "flex flex-col flex-grow bg-slate-100" : "flex flex-col flex-grow text-white bg-gray-800"}>
         <Header />
         <ProdcutManager products={products} />
       </div>

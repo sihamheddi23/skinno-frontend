@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import Sidebar from "../components/admin/Sidebar";
 import Header from "../components/admin/Header";
+import { useAppSelector } from "../store";
 
 const CompanyInfoPage = () => {
+  const themeState = useAppSelector((state) => state.theme)
+
   const [companyName, setCompanyName] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
@@ -16,16 +19,16 @@ const CompanyInfoPage = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col flex-grow  bg-slate-100">
+      <div className={themeState.theme === "light" ? "flex flex-col flex-grow bg-slate-100" : "flex flex-col flex-grow text-white bg-gray-800"}>
         <Header />
-        <div className=" mx-6 bg-white p-6 rounded-lg shadow-lg mt-8">
+        <div className={themeState.theme === "light"?" mx-6 bg-white p-6 rounded-lg shadow-lg mt-8":"mx-6 bg-gray-900 p-6 rounded-lg shadow-lg mt-8 text-white"}>
           <h2 className="text-2xl font-bold mb-4">
             Update Company Information
           </h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label
-                className="block text-gray-700 font-bold mb-2"
+                className={themeState.theme === "light" ? "block text-gray-700 font-bold mb-2" : "block text-gray-300 font-bold mb-2"}
                 htmlFor="companyName"
               >
                 Company Name
@@ -35,13 +38,13 @@ const CompanyInfoPage = () => {
                 id="companyName"
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className={themeState.theme === "light" ? "w-full p-2 border border-gray-300 rounded" : "w-full p-2 border bg-gray-700 border-gray-600 rounded"}
                 required
               />
             </div>
             <div className="mb-4">
               <label
-                className="block text-gray-700 font-bold mb-2"
+                className={themeState.theme === "light" ? "block text-gray-700 font-bold mb-2" : "block text-gray-300 font-bold mb-2"}
                 htmlFor="address"
               >
                 Address
@@ -51,13 +54,13 @@ const CompanyInfoPage = () => {
                 id="address"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className={themeState.theme === "light" ? "w-full p-2 border border-gray-300 rounded" : "w-full p-2 border bg-gray-700 border-gray-600 rounded"}
                 required
               />
             </div>
             <div className="mb-4">
-              <label
-                className="block text-gray-700 font-bold mb-2"
+          <label
+                className={themeState.theme === "light" ? "block text-gray-700 font-bold mb-2" : "block text-gray-300 font-bold mb-2"}
                 htmlFor="email"
               >
                 Email
@@ -67,13 +70,13 @@ const CompanyInfoPage = () => {
                 id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className={themeState.theme === "light" ? "w-full p-2 border border-gray-300 rounded" : "w-full p-2 border bg-gray-700 border-gray-600 rounded"}
                 required
               />
             </div>
             <div className="mb-4">
-              <label
-                className="block text-gray-700 font-bold mb-2"
+           <label
+                className={themeState.theme === "light" ? "block text-gray-700 font-bold mb-2" : "block text-gray-300 font-bold mb-2"}
                 htmlFor="phone"
               >
                 Phone
@@ -83,13 +86,13 @@ const CompanyInfoPage = () => {
                 id="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded"
+                className={themeState.theme === "light" ? "w-full p-2 border border-gray-300 rounded" : "w-full p-2 border bg-gray-700 border-gray-600 rounded"}
                 required
               />
             </div>
             <button
               type="submit"
-              className="bg-black text-white font-bold py-2 px-4 rounded"
+              className={themeState.theme === "light"?"bg-black text-white font-bold py-2 px-4 rounded":"bg-violet-950 text-white font-bold py-2 px-4 rounded"}
             >
               Update 
             </button>

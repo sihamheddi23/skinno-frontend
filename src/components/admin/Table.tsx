@@ -2,19 +2,22 @@ import {useState} from 'react';
 import { AgGridReact } from '@ag-grid-community/react';;
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
+
 import { ColDef, ColGroupDef, ValueGetterParams } from '@ag-grid-community/core';
+import { useAppSelector } from '../../store';
 
 
 const CustomButtonComponent = () => {
     return (
         <div className="flex gap-2 justify-center items-center">
-            <button className="bg-black text-white p-2 rounded">Edit</button>
+            <button className="bg-violet-950 text-white p-2 rounded">Edit</button>
             <button className="bg-red-500 text-white p-2 rounded">Delete</button>
        </div>
     );
   };
 
 const Table = () => {
+   const themeState = useAppSelector((state) => state.theme)
     const [rowData, setRowData] = useState<any[]>([
     { make: "Tesla", model: "Model Y", price: 64950, electric: true },
     { make: "Ford", model: "F-Series", price: 33850, electric: false },
@@ -33,7 +36,7 @@ return (
   <div style={{ width: '100%', height: '500px' }}>
     <div
       style={{ width: '100%', height: '100%' }}
-      className="ag-theme-quartz"
+      className={themeState.theme === "light" ? "ag-theme-quartz" : "ag-theme-quartz-dark"}
     >
       <AgGridReact rowData={rowData} columnDefs={columnDefs} />
     </div>
