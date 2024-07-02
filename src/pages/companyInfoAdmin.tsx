@@ -16,7 +16,7 @@ const CompanyInfoPage = () => {
   return (
     <div className="flex">
       <Sidebar />
-      <div className="flex flex-col flex-grow">
+      <div className="flex flex-col flex-grow  bg-slate-100">
         <Header />
         <div className=" mx-6 bg-white p-6 rounded-lg shadow-lg mt-8">
           <h2 className="text-2xl font-bold mb-4">
