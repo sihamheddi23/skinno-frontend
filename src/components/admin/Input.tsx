@@ -34,6 +34,7 @@ const Input: React.FC<InputProps> = ({
         {labelText}
       </label>
       <input
+        name={id}
         type={type}
         id={id}
         value={value}

@@ -8,7 +8,8 @@ type FormProps = {
 };
 
 const Form: React.FC<FormProps> = ({ children, title, onSubmit }) => {
-    const theme = useAppSelector((state) => state.theme.theme);
+  const theme = useAppSelector((state) => state.theme.theme);
+  
   return (
    
         <div

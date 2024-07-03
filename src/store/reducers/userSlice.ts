@@ -8,17 +8,25 @@ type LoginInput = {
   password: string;
 };
 
+type Company = {
+  phone: string;
+  name: string;
+  email: string;
+  address: string;
+  logo_url: string;
+  id?: number;
+};
+
+type CompanyInput = Omit<Company, "logo_url"> & {
+  logo: File;
+  token: string;
+};
+
 interface UserState {
   user: {
     token: string;
     role: "admin" | "customer";
-    company: {
-      name: string;
-      email: string;
-      address: string;
-      logo_url: string;
-      id: number;
-    };
+    company: Company;
   };
   loading: boolean;
   err: string | null;
@@ -30,6 +38,59 @@ const initialState: UserState = {
   loading: false,
   err: null,
 };
+
+export const addCompanyInfo = createAsyncThunk(
+  "user/addCompany",
+  async (companyInput: CompanyInput) => {
+    const formData = new FormData();
+    formData.set("email", companyInput.email);
+    formData.set("name", companyInput.name);
+    formData.set("phone", companyInput.phone);
+    formData.set("address", companyInput.address);
+    formData.set("logo", companyInput.logo);
+
+    const req = await fetch("http://localhost:3000/api/v1/company/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${companyInput.token}`,
+      },
+      body: formData
+    });
+    const res = await req.json();
+    if (res.error) {
+      throw new Error(res.error);
+    }
+    return res;
+  }
+);
+
+export const updateCompanyInfo = createAsyncThunk(
+  "user/addCompany",
+  async (companyInput: CompanyInput) => {
+    const formData = new FormData();
+    formData.set("email", companyInput.email);
+    formData.set("name", companyInput.name);
+    formData.set("phone", companyInput.phone);
+    formData.set("address", companyInput.address);
+    formData.set("logo", companyInput.logo);
+
+    const req = await fetch("http://localhost:3000/api/v1/company/"+companyInput.id, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${companyInput.token}`,
+      },
+      body: formData
+    });
+    const res = await req.json();
+    if (res.error) {
+      throw new Error(res.error);
+    }
+    return res;
+  }
+);
+
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (signInInput: LoginInput) => {
@@ -50,19 +111,22 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-export const logoutUser = createAsyncThunk("user/logoutUser", async (token: string) => {
-  const req = await fetch("http://localhost:3000/api/v1/auth/logout/", {
-    method: "delete",
-    headers: {
-      "Authorization": `Bearer ${token}`,
+export const logoutUser = createAsyncThunk(
+  "user/logoutUser",
+  async (token: string) => {
+    const req = await fetch("http://localhost:3000/api/v1/auth/logout/", {
+      method: "delete",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const res = await req.json();
+    if (res.error) {
+      throw new Error(res.error);
     }
-  });
-  const res = await req.json();
-  if (res.error) {
-    throw new Error(res.error);
+    return res;
   }
-  return res;
-});
+);
 
 const userSlice = createSlice({
   name: "user",
@@ -101,7 +165,37 @@ const userSlice = createSlice({
         state.loading = false;
         state.err = action.error.message.replace("Error: ", "");
         alertError(state.err);
-      });
+      })
+       .addCase(addCompanyInfo.pending, (state) => {
+        state.loading = true;
+        state.err = null;
+       })
+       .addCase(addCompanyInfo.fulfilled, (state, action) => {
+         state.loading = false;
+         state.user.company = action.payload.company;
+         Cookie.set("user",JSON.stringify(state.user));
+         state.err = null;
+       })
+       .addCase(addCompanyInfo.rejected, (state, action) => {
+         state.loading = false;
+         state.err = action.error.message.replace("Error: ", "");
+         alertError(state.err);
+       })
+       .addCase(updateCompanyInfo.pending, (state) => {
+        state.loading = true;
+        state.err = null;
+       })
+       .addCase(updateCompanyInfo.fulfilled, (state, action) => {
+         state.loading = false;
+         state.user.company = action.payload.company;
+         Cookie.set("user",JSON.stringify(state.user));
+         state.err = null;
+       })
+       .addCase(updateCompanyInfo.rejected, (state, action) => {
+         state.loading = false;
+         state.err = action.error.message.replace("Error: ", "");
+         alertError(state.err);
+       })
   },
 });
 
