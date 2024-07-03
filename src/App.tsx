@@ -13,11 +13,12 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import IsNotAuthRoute from "./components/routes/IsNotAuthRoute";
 import IsAuthRoute from "./components/routes/IsAuthRoute";
+import OwnCompanyRoute from "./components/routes/OwnCompanyRoute";
 
 function App() {
   return (
-    <div >
-     <Router>
+    <div>
+      <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
 
@@ -25,18 +26,24 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
           </Route>
-   
+
           <Route path="/search" element={<SearchProductsPage />} />
           <Route path="/product/:productId" element={<ProductDetailsPage />} />
 
           <Route element={<IsAuthRoute />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/dashboard/products" element={<ProductAdmin />} />
-            <Route path="/dashboard/orders" element={<OrdersPage />} />
+
+            <Route element={<OwnCompanyRoute />}>
+              <Route path="/dashboard/products" element={<ProductAdmin />} />
+              <Route path="/dashboard/orders" element={<OrdersPage />} />
+            </Route>
+
             <Route path="/assisstant" element={<AIChatPage />} />
-            <Route path="/dashboard/about-company" element={<CompanyInfoPage />} />
+            <Route
+              path="/dashboard/about-company"
+              element={<CompanyInfoPage />}
+            />
           </Route>
-          
         </Routes>
       </Router>
       <ToastContainer />
