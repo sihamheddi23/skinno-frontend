@@ -8,7 +8,7 @@ const Header = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const {
-    loading,
+    loadingUser: loading ,
     user: { token },
   } = useAppSelector((state) => state.user);
   const themeState = useAppSelector((state) => state.theme);

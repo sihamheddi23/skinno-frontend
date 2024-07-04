@@ -1,5 +1,4 @@
 import { useAppSelector } from '../../store';
-import SubmitButton from './SubmitButton'
 
 type FormProps = {
     children: React.ReactNode;
@@ -24,7 +23,6 @@ const Form: React.FC<FormProps> = ({ children, title, onSubmit }) => {
           </h2>
           <form onSubmit={onSubmit}>
             {children}
-            <SubmitButton theme={theme} />
           </form>
         </div>
   )

@@ -2,13 +2,13 @@ import React from "react";
 
 type InputProps = {
   theme: "light" | "dark";
-  value?: string;
+  value?: any ;
   type: "file" | "email" | "password" | "text" | "number";
-  placeholder: string;
+  placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   labelText: string;
   id: string;
-  errors: string | undefined;
+  errors?: string | undefined;
 };
 
 const Input: React.FC<InputProps> = ({
@@ -19,7 +19,7 @@ const Input: React.FC<InputProps> = ({
   onChange,
   labelText,
   id,
-  errors,
+  errors
 }) => {
   return (
     <div className="mb-4">
@@ -44,7 +44,7 @@ const Input: React.FC<InputProps> = ({
             ? "w-full p-2 border border-gray-300 rounded"
             : "w-full p-2 border bg-gray-700 border-gray-600 rounded"
         }
-        required
+        
         placeholder={placeholder}
       />
 

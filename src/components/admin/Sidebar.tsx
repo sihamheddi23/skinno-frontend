@@ -11,6 +11,7 @@ import { FaLock } from "react-icons/fa";
 
 const Sidebar = () => {
   const themeState = useAppSelector((state) => state.theme);
+  const userState = useAppSelector((state) => state.user);
 
   return (
     <div
@@ -27,8 +28,17 @@ const Sidebar = () => {
             : "p-6 text-2xl font-bold border-b border-gray-600 flex justify-center gap-2 items-center text-white"
         }
       >
-        <Logo />
-        <span>Skinno</span>
+        {userState.user.company ? (
+          <img
+            src={userState.user.company.logo_url}
+            className="w-10 h-10 rounded-full"
+          />
+        ) : (
+          <Logo />
+        )}
+        <span>
+          {userState.user.company ? userState.user.company.name : "Skinno"}
+        </span>
       </div>
       <nav className="flex flex-col flex-grow mt-6">
         <Link
@@ -40,7 +50,7 @@ const Sidebar = () => {
           }
         >
           <MdDashboard />
-          Dashboard 
+          Dashboard
         </Link>
         <Link
           to="/dashboard/products"
@@ -52,7 +62,7 @@ const Sidebar = () => {
         >
           <MdOutlineProductionQuantityLimits />
           <span className="mr-auto">Products</span>
-          <FaLock />
+          {userState.user.company ? "" : <FaLock />}
         </Link>
         <Link
           to="/dashboard/orders"
@@ -64,7 +74,7 @@ const Sidebar = () => {
         >
           <MdOutlineCardGiftcard />
           <span className="mr-auto">orders</span>
-          <FaLock />
+          {userState.user.company ? "" : <FaLock />}
         </Link>
         <Link
           to="/dashboard/about-company"

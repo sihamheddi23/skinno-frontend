@@ -15,7 +15,7 @@ const signinSchema = Yup.object().shape({
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const  {loading, err}= useAppSelector((state) => state.user)
+  const  {loadingUser:loading, err}= useAppSelector((state) => state.user)
   const dispatch = useAppDispatch()
   const formik = useFormik({
     initialValues: {

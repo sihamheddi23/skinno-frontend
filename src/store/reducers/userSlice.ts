@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Cookie from "js-cookie";
-import { axiosConfig } from "../../api/axiosConfig";
+import { axiosConfig, BASE_URL } from "../../api/axiosConfig";
 import { alertError } from "../../utils/toasts";
 
 type LoginInput = {
@@ -28,14 +28,16 @@ interface UserState {
     role: "admin" | "customer";
     company: Company;
   };
-  loading: boolean;
+  loadingUser: boolean;
+  loadingCompany: boolean;
   err: string | null;
 }
 
 const userCookie = Cookie.get("user");
 const initialState: UserState = {
   user: userCookie ? JSON.parse(userCookie) : null,
-  loading: false,
+  loadingUser: false,
+  loadingCompany: false,
   err: null,
 };
 
@@ -49,10 +51,9 @@ export const addCompanyInfo = createAsyncThunk(
     formData.set("address", companyInput.address);
     formData.set("logo", companyInput.logo);
 
-    const req = await fetch("http://localhost:3000/api/v1/company/", {
+    const req = await fetch(BASE_URL + "/company/", {
       method: "POST",
       headers: {
-        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${companyInput.token}`,
       },
       body: formData
@@ -66,7 +67,7 @@ export const addCompanyInfo = createAsyncThunk(
 );
 
 export const updateCompanyInfo = createAsyncThunk(
-  "user/addCompany",
+  "user/updateCompany",
   async (companyInput: CompanyInput) => {
     const formData = new FormData();
     formData.set("email", companyInput.email);
@@ -75,11 +76,10 @@ export const updateCompanyInfo = createAsyncThunk(
     formData.set("address", companyInput.address);
     formData.set("logo", companyInput.logo);
 
-    const req = await fetch("http://localhost:3000/api/v1/company/"+companyInput.id, {
+    const req = await fetch(BASE_URL + "/company/"+companyInput.id, {
       method: "PATCH",
       headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${companyInput.token}`,
+        "Authorization": `Bearer ${companyInput.token}`,
       },
       body: formData
     });
@@ -94,7 +94,7 @@ export const updateCompanyInfo = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (signInInput: LoginInput) => {
-    const req = await fetch("http://localhost:3000/api/v1/auth/login/", {
+    const req = await fetch(BASE_URL + "/auth/login/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -114,7 +114,7 @@ export const loginUser = createAsyncThunk(
 export const logoutUser = createAsyncThunk(
   "user/logoutUser",
   async (token: string) => {
-    const req = await fetch("http://localhost:3000/api/v1/auth/logout/", {
+    const req = await fetch(BASE_URL + "/auth/logout/", {
       method: "delete",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -135,10 +135,10 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
-        state.loading = true;
+        state.loadingUser = true;
       })
       .addCase(loginUser.fulfilled, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+        state.loadingUser = false;
         state.user = {
           token: action.payload.token,
           company: action.payload.company,
@@ -147,52 +147,52 @@ const userSlice = createSlice({
         Cookie.set("user", JSON.stringify(state.user), { expires: 20 });
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingUser = false;
         state.user = null;
         state.err = action.error.message.replace("Error: ", "");
       })
       .addCase(logoutUser.pending, (state) => {
-        state.loading = true;
+        state.loadingUser = true;
         state.err = null;
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.loading = false;
+        state.loadingUser = false;
         state.user = null;
         state.err = null;
         Cookie.remove("user");
       })
       .addCase(logoutUser.rejected, (state, action) => {
-        state.loading = false;
+        state.loadingUser = false;
         state.err = action.error.message.replace("Error: ", "");
         alertError(state.err);
       })
        .addCase(addCompanyInfo.pending, (state) => {
-        state.loading = true;
+        state.loadingCompany = true;
         state.err = null;
        })
        .addCase(addCompanyInfo.fulfilled, (state, action) => {
-         state.loading = false;
-         state.user.company = action.payload.company;
+         state.loadingCompany = false;
+         state.user.company = action.payload;
          Cookie.set("user",JSON.stringify(state.user));
          state.err = null;
        })
        .addCase(addCompanyInfo.rejected, (state, action) => {
-         state.loading = false;
+         state.loadingCompany = false;
          state.err = action.error.message.replace("Error: ", "");
          alertError(state.err);
        })
        .addCase(updateCompanyInfo.pending, (state) => {
-        state.loading = true;
+        state.loadingCompany = true;
         state.err = null;
        })
        .addCase(updateCompanyInfo.fulfilled, (state, action) => {
-         state.loading = false;
-         state.user.company = action.payload.company;
+         state.loadingCompany = false;
+         state.user.company = action.payload;
          Cookie.set("user",JSON.stringify(state.user));
          state.err = null;
        })
        .addCase(updateCompanyInfo.rejected, (state, action) => {
-         state.loading = false;
+         state.loadingCompany = false;
          state.err = action.error.message.replace("Error: ", "");
          alertError(state.err);
        })

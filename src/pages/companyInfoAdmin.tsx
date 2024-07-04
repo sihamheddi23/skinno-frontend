@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/admin/Sidebar";
 import Header from "../components/admin/Header";
 import { useAppDispatch, useAppSelector } from "../store";
@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { addCompanyInfo, updateCompanyInfo } from "../store/reducers/userSlice";
 import { alertSuccess } from "../utils/toasts";
+import SubmitButton from "../components/generics/SubmitButton";
 
 const companySchema = Yup.object().shape({
   name: Yup.string().required("Above field is required"),
@@ -22,40 +23,38 @@ const CompanyInfoPage = () => {
   const themeState = useAppSelector((state) => state.theme);
   const userState = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-
+  const [logo_image, setlogo_image] = useState<File | undefined>(undefined)
+  
+  
   const formik = useFormik({
     initialValues: {
-      email: userState.user.company.email || "",
-      name: userState.user.company.name || "",
-      phone: userState.user.company.phone || "",
-      address: userState.user.company.address || "",
-      logo: null,
+      email: userState.user.company?.email || "",
+      name: userState.user.company?.name || "",
+      phone: userState.user.company?.phone || "",
+      address: userState.user.company?.address || "",
     },
     onSubmit: (values) => {
       const input: any = {
         ...values,
+        logo: logo_image,
         token: userState.user.token,
       };
+
       if (userState.user.company) {
         input.id = userState.user.company.id;
         dispatch(updateCompanyInfo(input))
           .unwrap()
           .then(() => {
             alertSuccess("Company information has been added successfully");
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
           });
       } else {
         dispatch(addCompanyInfo(input))
           .unwrap()
           .then(() => {
             alertSuccess("Company information updated successfully");
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
           });
       }
+
     },
     validationSchema: companySchema,
   });
@@ -70,60 +69,63 @@ const CompanyInfoPage = () => {
         }
       >
         <Header />
-        <Form title="Update Company Information" onSubmit={() => {}}>
+        <Form title="Update Company Information" onSubmit={formik.handleSubmit}>
           <Input
             theme={themeState.theme}
             labelText="Company Name"
             type="text"
-            value="Company Name"
-            onChange={() => {}}
-            placeholder=""
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            placeholder="Enter your company name"
             id="name"
-            errors=""
+            errors={formik.errors.name}
           />
 
           <Input
             theme={themeState.theme}
             labelText="Company Email"
             type="text"
-            value="Company Email"
-            onChange={() => {}}
-            placeholder=""
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            placeholder="Enter your company email"
             id="email"
-            errors=""
+            errors={formik.errors.email}
           />
 
           <Input
             theme={themeState.theme}
             labelText="Company Phone"
             type="text"
-            value="Company Phone"
-            onChange={() => {}}
-            placeholder=""
+            value={formik.values.phone}
+            onChange={formik.handleChange}
+            placeholder="Enter your company phone"
             id="phone"
-            errors=""
+            errors={formik.errors.phone}
           />
 
           <Input
             theme={themeState.theme}
             labelText="Company Address"
             type="text"
-            value="Company Address"
-            onChange={() => {}}
-            placeholder=""
+            value={formik.values.address}
+            onChange={formik.handleChange}
+            placeholder="Enter your company address"
             id="address"
-            errors=""
+            errors={formik.errors.address}
           />
 
           <Input
             theme={themeState.theme}
             labelText="Company Logo"
             type="file"
-            onChange={() => {}}
-            placeholder=""
             id="logo"
-            errors=""
+            onChange={(e) => {
+              setlogo_image(e.target.files[0]);
+            }}
+            placeholder="Enter your company logo"
           />
+          <SubmitButton name={userState.loadingCompany ? "Updating..." : "Update"} />
+
         </Form>
       </div>
     </div>

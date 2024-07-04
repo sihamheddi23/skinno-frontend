@@ -8,7 +8,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({ name }) => {
   return (
     <button
       type="submit"
-      className="w-full bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-900 transition duration-200"
+      className="bg-gray-800 text-white py-2 px-4 rounded hover:bg-gray-900 transition duration-200"
     >
       {name}
     </button>
