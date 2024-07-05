@@ -14,6 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import IsNotAuthRoute from "./components/routes/IsNotAuthRoute";
 import IsAuthRoute from "./components/routes/IsAuthRoute";
 import OwnCompanyRoute from "./components/routes/OwnCompanyRoute";
+import WelcomeAIAssisstant from "./pages/WelcomeAIAssisstantPage";
 
 function App() {
   return (
@@ -37,8 +38,9 @@ function App() {
               <Route path="/dashboard/products" element={<ProductAdmin />} />
               <Route path="/dashboard/orders" element={<OrdersPage />} />
             </Route>
-
-            <Route path="/assisstant" element={<AIChatPage />} />
+           
+            <Route path="/assisstant/welcome" element={<WelcomeAIAssisstant />} />
+            <Route path="/assisstant/chat/:roomId" element={<AIChatPage />} />
             <Route
               path="/dashboard/about-company"
               element={<CompanyInfoPage />}
