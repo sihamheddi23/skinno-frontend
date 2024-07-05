@@ -44,7 +44,7 @@ function Header() {
               WishList
             </button>
             <Link
-              to="/assisstant"
+              to="/assisstant/welcome"
               className="bg-gray-800 text-white p-[0.6em] rounded-xl mx-4 flex gap-2 items-center"
             >
               <FaRobot />

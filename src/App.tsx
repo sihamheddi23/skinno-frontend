@@ -40,7 +40,7 @@ function App() {
             </Route>
            
             <Route path="/assisstant/welcome" element={<WelcomeAIAssisstant />} />
-            <Route path="/assisstant/chat/:roomId" element={<AIChatPage />} />
+            <Route path="/assisstant/chat/:slug" element={<AIChatPage />} />
             <Route
               path="/dashboard/about-company"
               element={<CompanyInfoPage />}
