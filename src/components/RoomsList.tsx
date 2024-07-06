@@ -122,8 +122,9 @@ function RoomsList() {
 
       <div className="text-gray-700 my-4 flex flex-col ">
         {rooms.length > 0 &&
-          rooms?.map((room) => (
+          rooms?.map((room, index) => (
             <div
+              key={index}
               className={
                 param.slug && param.slug === room.slug
                   ? "flex gap-1 justify-between mb-2  mx-4 p-2 bg-gray-200"
