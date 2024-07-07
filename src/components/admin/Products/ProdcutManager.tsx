@@ -3,13 +3,34 @@ import Table from "../Table";
 import { ColDef, ColGroupDef } from "ag-grid-community";
 import { useAppSelector } from "../../../store";
 import { BASE_URL } from "../../../api/axiosConfig";
-import { alertError } from "../../../utils/toasts";
+import { alertError, alertSuccess } from "../../../utils/toasts";
 import { Link } from "react-router-dom";
-const CustomButtonComponent = () => {
+const CustomButtonComponent = (props) => {
+  const userState = useAppSelector((state) => state.user);
+  const onDelete = async () => {
+     fetch(BASE_URL + "/products/" + props.data.id, {
+       method: "DELETE",
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${userState.user.token}`,
+       },
+     })
+       .then((res) => res.json())
+       .then((res) => {
+         alertSuccess("Product Deleted Successfully");
+         setTimeout(() => {
+           window.location.reload();
+         }, 500);
+       })
+       .catch((err) => {
+         console.log(err);
+         alertError("Something went wrong to the server. Please try again later");
+       })
+  }
   return (
     <div className="flex gap-2 justify-center items-center">
-      <button className="bg-violet-950 text-white p-2 rounded">Edit</button>
-      <button className="bg-red-500 text-white p-2 rounded">Delete</button>
+      <Link to={`/dashboard/products/${props.data.id}`} className="bg-violet-950 text-white p-2 rounded">Edit</Link>
+      <button className="bg-red-500 text-white p-2 rounded" onClick={onDelete}>Delete</button>
     </div>
   );
 };

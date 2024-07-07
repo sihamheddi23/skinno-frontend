@@ -18,7 +18,7 @@ const Sidebar = () => {
       className={
         themeState.theme === "light"
           ? " text-gray-800 h-screen bg-white w-64 flex flex-col border-r border-gray-300"
-          : "h-[150vh] text-white bg-gray-800 w-64 flex flex-col border-r border-gray-600"
+          : "h-[170vh] text-white bg-gray-800 w-64 flex flex-col border-r border-gray-600"
       }
     >
       <div
