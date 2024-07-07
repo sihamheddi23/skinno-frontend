@@ -30,7 +30,11 @@ const ChatWithBot: React.FC<ChatWithBotInputProps> = ({ socket }) => {
 
         setMessages((prevMessages) => [...prevMessages, data]);
         setInput("");
-      });
+     });
+    return () => {
+      socket.off("get_messages_" + param.slug);
+      socket.off("receive_message_" + param.slug);
+    }
   }, [param.slug]);
 
 

@@ -5,8 +5,12 @@ import { FaHeart, FaRobot, FaUserPlus } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 import { CiUser } from "react-icons/ci";
 import { IoHomeOutline } from "react-icons/io5";
+import { useAppSelector } from "../../store";
+import Logout from "../admin/Logout";
 
 function Header() {
+  const userState = useAppSelector((state) => state.user);
+
   return (
     <header className="bg-white py-6 shadow-md w-full">
       <div className="w-[100%]  mx-5 px-4 flex justify-between items-center">
@@ -17,23 +21,37 @@ function Header() {
         <nav className="flex ml-auto items-center justify-end">
           <div className="flex justify-end gap-2 ml-9 items-center">
             <Link to="/" className="text-gray-800 flex items-center gap-1">
-            <IoHomeOutline />
+              <IoHomeOutline />
               Home
             </Link>
-            <Link
-              to="/login"
-              className="text-gray-800 mx-2 flex items-center gap-1"
-            >
-              <CiUser />
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="text-gray-800 mr-4 flex items-center gap-1"
-            >
-              <FaUserPlus />
-              Register
-            </Link>
+            {userState.user ? (
+              <>
+                <Link
+                  to="/login"
+                  className="text-gray-800 mx-2 flex items-center gap-1"
+                >
+                  Your Account
+                </Link>
+                <Logout />
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-gray-800 mx-2 flex items-center gap-1"
+                >
+                  <CiUser />
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-gray-800 mr-4 flex items-center gap-1"
+                >
+                  <FaUserPlus />
+                  Register
+                </Link>
+              </>
+            )}
 
             <button className="text-violet-900 flex gap-1 items-center">
               <FaBagShopping />

@@ -9,6 +9,7 @@ type InputProps = {
   labelText: string;
   id: string;
   errors?: string | undefined;
+  step?: number
 };
 
 const Input: React.FC<InputProps> = ({
@@ -19,7 +20,8 @@ const Input: React.FC<InputProps> = ({
   onChange,
   labelText,
   id,
-  errors
+  errors,
+  step,
 }) => {
   return (
     <div className="mb-4">
@@ -39,6 +41,7 @@ const Input: React.FC<InputProps> = ({
         id={id}
         value={value}
         onChange={onChange}
+        step={step}
         className={
           theme === "light"
             ? "w-full p-2 border border-gray-300 rounded"
@@ -47,7 +50,6 @@ const Input: React.FC<InputProps> = ({
         
         placeholder={placeholder}
       />
-
       {errors && <p className="text-red-500 mt-2">{errors}</p>}
     </div>
   );

@@ -15,6 +15,7 @@ import IsNotAuthRoute from "./components/routes/IsNotAuthRoute";
 import IsAuthRoute from "./components/routes/IsAuthRoute";
 import OwnCompanyRoute from "./components/routes/OwnCompanyRoute";
 import WelcomeAIAssisstant from "./pages/WelcomeAIAssisstantPage";
+import AddProduct from "./pages/AddProduct";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
 
             <Route element={<OwnCompanyRoute />}>
               <Route path="/dashboard/products" element={<ProductAdmin />} />
+              <Route path="/dashboard/add-product" element={<AddProduct />} />
+
               <Route path="/dashboard/orders" element={<OrdersPage />} />
             </Route>
            

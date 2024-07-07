@@ -1,29 +1,11 @@
-import { useAppDispatch, useAppSelector } from "../../store";
-import { logoutUser } from "../../store/reducers/userSlice";
-import { alertSuccess } from "../../utils/toasts";
-import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../store";
+
 import ModeButton from "../generics/ModeButton";
+import Logout from "./Logout";
 
 const Header = () => {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const {
-    loadingUser: loading ,
-    user: { token },
-  } = useAppSelector((state) => state.user);
+ 
   const themeState = useAppSelector((state) => state.theme);
-
-  const logout = () => {
-    dispatch(logoutUser(token)).then((result: any) => {
-      if (!result.error) {
-        alertSuccess("You have been logged out successfully");
-        setTimeout(() => {
-          navigate("/login");
-        }, 2000);
-      }
-    });
-  };
-
   return (
     <header
       className={
@@ -35,12 +17,7 @@ const Header = () => {
       <div className="text-lg font-bold">Dashboard</div>
       <div className="flex items-center gap-3">
         <ModeButton />
-        <button
-          className={"bg-violet-950 text-white px-4 py-2 rounded"}
-          onClick={logout}
-        >
-          {loading ? <span>Logging out...</span> : <span>Logout</span>}
-        </button>
+        <Logout />
       </div>
     </header>
   );
