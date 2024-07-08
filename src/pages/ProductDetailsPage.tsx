@@ -5,50 +5,8 @@ import Footer from "../components/Footer";
 import { FaHeart } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 
-const products = [
-  {
-    id: 1,
-    name: "Soothing Facial Cleanser",
-    category: "Cleanser",
-    price: 29.99,
-    description:
-      "A gentle facial cleanser that soothes and refreshes your skin.",
-    image: "/path-to-product1.jpg",
-    ingredients:
-      "Water, Glycerin, Sodium Laureth Sulfate, Cocamidopropyl Betaine, Aloe Vera",
-    howToUse: "Apply to wet skin, massage gently, and rinse thoroughly.",
-    recommendedProducts: [2, 3],
-  },
-  {
-    id: 2,
-    name: "Hydrating Night Cream",
-    category: "Moisturizer",
-    price: 39.99,
-    description:
-      "A hydrating night cream that nourishes and revitalizes your skin overnight.",
-    image: "/path-to-product2.jpg",
-    ingredients: "Water, Glycerin, Cetyl Alcohol, Shea Butter, Hyaluronic Acid",
-    howToUse: "Apply nightly to cleansed face and neck.",
-    recommendedProducts: [1, 3],
-  },
-  {
-    id: 3,
-    name: "Brightening Serum",
-    category: "Serum",
-    price: 49.99,
-    description:
-      "A brightening serum that enhances your skin's natural radiance.",
-    image: "/path-to-product3.jpg",
-    ingredients: "Water, Glycerin, Ascorbic Acid, Niacinamide, Ferulic Acid",
-    howToUse: "Apply a few drops to face and neck every morning and evening.",
-    recommendedProducts: [1, 2],
-  },
-  // Add more products as needed
-];
-
 const ProductDescriptionPage = () => {
-  const { productId }: any = useParams();
-  const product = products.find((p) => p.id === parseInt(productId));
+  const { id }: any = useParams();
 
   if (!product) {
     return (
@@ -65,9 +23,6 @@ const ProductDescriptionPage = () => {
     );
   }
 
-  const recommendedProducts = product.recommendedProducts.map((id) =>
-    products.find((p) => p.id === id)
-  );
 
   return (
     <div className="bg-gray-100 min-h-screen">

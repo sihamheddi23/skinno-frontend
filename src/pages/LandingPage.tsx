@@ -11,7 +11,7 @@ const LandingPage = () => {
       <Header />
       <main>
         <HeroSection />
-        <BestSellers />
+        {/* <BestSellers /> */}
         <AboutUs />
         <GetInTouch />
       </main>

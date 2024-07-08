@@ -5,6 +5,7 @@ import { useAppSelector } from "../../../store";
 import { BASE_URL } from "../../../api/axiosConfig";
 import { alertError, alertSuccess } from "../../../utils/toasts";
 import { Link } from "react-router-dom";
+import Pagination from "../../generics/Pagination";
 const CustomButtonComponent = (props) => {
   const userState = useAppSelector((state) => state.user);
   const onDelete = async () => {
@@ -36,8 +37,15 @@ const CustomButtonComponent = (props) => {
 };
 
 function ProdcutManager() {
+  const API_URL = BASE_URL + "/products/company/";
   const userState = useAppSelector((state) => state.user);
   const [products, setProducts] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const onChangePage = (newPage: number) => {
+    setPage(newPage);
+  };
 
   const columnDefs: (ColDef<any, any> | ColGroupDef<any>)[] = [
     { headerName: "Name", field: "name", flex: 2 },
@@ -51,28 +59,32 @@ function ProdcutManager() {
   ];
 
   useEffect(() => {
-    fetch(BASE_URL + "/products", {
+     getProducts();
+  }, [page]);
+
+  const getProducts = async () => {
+     await fetch(API_URL+ "?page=" + page, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${userState.user.token}`,
       },
-    })
+     })
       .then((res) => res.json())
       .then((res) => {
         setProducts(res.products);
+        setTotalPages(res.pages);
       })
       .catch((err) => {
-        alertError(
-          "Something went wrong to the server. Please try again later"
-        );
         console.log(err);
+        alertError("Something went wrong to the server. Please try again later");
       });
-  }, []);
+   
+  };
 
   return (
     <div className="p-4">
-      <div className="flex justify-between mx-4 my-2">
+      <div className="flex justify-between mx-4 my-4">
         <h1 className="text-2xl font-bold mb-4">Products</h1>
         <Link to={"/dashboard/add-product"} className="bg-violet-950 py-3 px-2 text-white rounded">
           Add Product
@@ -81,6 +93,14 @@ function ProdcutManager() {
       <div className="overflow-x-auto">
         <Table rowData={products} columnDefs={columnDefs} />
       </div>
+      {
+        totalPages > 1 &&
+        <Pagination
+          current_page={page}
+          pages={totalPages}
+          onPageChange={onChangePage}
+        />
+      }
     </div>
   );
 }

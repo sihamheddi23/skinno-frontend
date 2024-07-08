@@ -54,7 +54,7 @@ const AddOrUpdateProduct = () => {
         token: userState.user.token,
       };
       const form = new FormData();
-
+      
       form.append("name", input.name);
       form.append("description", input.description);
       form.append("ingredients", input.ingredients);
@@ -62,7 +62,7 @@ const AddOrUpdateProduct = () => {
       form.append("quantity", input.quantity.toString());
       form.append("price", input.price.toString());
       form.append("image", input.image);
-      console.log(form);
+
       if (params.id) {
         fetch(`${BASE_URL}/products/${params.id}`, {
           method: "PUT",
@@ -72,7 +72,7 @@ const AddOrUpdateProduct = () => {
           },
         })
           .then((response) => response.json())
-          .then((data) => {
+          .then(() => {
             alertSuccess("Product has been updated successfully");
             navigate('/dashboard/products')
           })

@@ -2,6 +2,7 @@ import Sidebar from '../components/admin/Sidebar';
 import Header from '../components/admin/Header';
 import ProdcutManager from '../components/admin/Products/ProdcutManager';
 import { useAppSelector } from '../store';
+import Pagination from '../components/generics/Pagination';
 
 
 const ProductsAdmin = () => {
