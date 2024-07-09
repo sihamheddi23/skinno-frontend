@@ -7,10 +7,35 @@ import { CiUser } from "react-icons/ci";
 import { IoHomeOutline } from "react-icons/io5";
 import { useAppSelector } from "../../store";
 import Logout from "../admin/Logout";
+import { useState } from "react";
+import Bar from "./Bar";
+
+type VisibleBar = {
+  ans: boolean;
+  type: "CARD" | "WISHLIST" | null;
+};
 
 function Header() {
   const userState = useAppSelector((state) => state.user);
+  const [isVisible, setIsVisible] = useState<VisibleBar>({
+    ans: false,
+    type: null,
+  });
+  const showCard = () => {
+    setIsVisible({
+      ans: true,
+      type: "CARD",
+    });
+    document.body.style.overflow = "hidden";
+  };
+  const showWishList = () => {
+    setIsVisible({
+      ans: true,
+      type: "WISHLIST",
+    });
+        document.body.style.overflow = "hidden";
 
+  };
   return (
     <header className="bg-white py-6 shadow-md w-full">
       <div className="w-[100%]  mx-5 px-4 flex justify-between items-center">
@@ -53,13 +78,13 @@ function Header() {
               </>
             )}
 
-            <button className="text-violet-900 flex gap-1 items-center">
+            <button className="text-violet-900 flex gap-1 items-center" onClick={showCard}>
               <FaBagShopping />
-              Card
+              Card(0)
             </button>
-            <button className="text-violet-900 flex gap-1 items-center">
+            <button className="text-violet-900 flex gap-1 items-center" onClick={showWishList}>
               <FaHeart />
-              WishList
+              WishList(0)
             </button>
             <Link
               to="/assisstant/welcome"
@@ -76,6 +101,10 @@ function Header() {
           </div>
         </nav>
       </div>
+      {isVisible.ans && isVisible.type === "CARD" && <Bar type="CARD" setIsVisible={setIsVisible} />}
+      {isVisible.ans && isVisible.type === "WISHLIST" && (
+        <Bar type="WISHLIST" setIsVisible={setIsVisible} />
+      )}
     </header>
   );
 }

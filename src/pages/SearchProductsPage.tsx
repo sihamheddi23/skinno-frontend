@@ -62,7 +62,7 @@ const SearchProductPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [products, setProducts] = useState([]);
-  const [api_url, setapi_url] = useState<string>("")
+  const [api_url, setapi_url] = useState<string>("");
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -75,9 +75,8 @@ const SearchProductPage = () => {
   };
 
   useEffect(() => {
-     if (searchTerm.trim() != "") {
-       
-     }
+    if (searchTerm.trim() != "") {
+    }
   }, [page]);
 
   useEffect(() => {
@@ -124,18 +123,16 @@ const SearchProductPage = () => {
     }
 
     setapi_url(API_URL);
-
   }, [selectedPriceRange, searchTerm]);
 
   useEffect(() => {
     getProducts(api_url);
     setPage(1);
-
   }, [api_url]);
 
   useEffect(() => {
     if (page > 1) {
-      const API_URL = api_url + `&page=${page}`
+      const API_URL = api_url + `&page=${page}`;
       getProducts(API_URL);
     }
   }, [page]);
@@ -148,7 +145,6 @@ const SearchProductPage = () => {
       .then((res) => {
         setProducts(res.products);
         setTotalPages(res.pages);
-
       })
       .catch((err) => {
         console.log(err);
@@ -187,7 +183,9 @@ const SearchProductPage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-11">
             {products.map((product) => (
-              <ProductCard key={product._id} product={product} />
+              <div key={product.id}>
+                <ProductCard product={product} />
+              </div>
             ))}
             {products.length === 0 && (
               <p className="text-center text-gray-500">No products found.</p>
