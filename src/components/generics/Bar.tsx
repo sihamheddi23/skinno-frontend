@@ -7,7 +7,10 @@ import {
 import { LuHeart } from "react-icons/lu";
 import { MdCardGiftcard } from "react-icons/md";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
+import ProductItem from "./ProductItem";
+import { BASE_URL } from "../../api/axiosConfig";
+import { alertError, alertSuccess } from "../../utils/toasts";
 
 type BarProps = {
   type: "CARD" | "WISHLIST";
@@ -15,7 +18,12 @@ type BarProps = {
 };
 const Bar: React.FC<BarProps> = ({ type, setIsVisible }) => {
   const userState = useAppSelector((state) => state.user);
+  const cardState = useAppSelector((state) => state.card);
+  const wishList = useAppSelector((state) => state.wishList);
+  const dispatch = useAppDispatch();
   const [showOrderPage, setshowOrderPage] = useState(false);
+  const [address, setAddress] = useState<string>("");
+
   const hideBar = () => {
     setIsVisible({
       ans: false,
@@ -23,11 +31,48 @@ const Bar: React.FC<BarProps> = ({ type, setIsVisible }) => {
     });
     document.body.style.overflowY = "auto";
   };
+
   const goToNextPage = () => {
-    if (userState.user) {
-      setshowOrderPage(true);
+    if (showOrderPage === false) {
+      if (userState.user) {
+        setshowOrderPage(true);
+      }
+    }
+    else {
+      if (address.trim() !== "") {
+         fetch(`${BASE_URL}/orders/`, {
+           method: "POST",
+           headers: {
+             "Content-Type": "application/json",
+             Authorization: `Bearer ${userState.user.token}`,
+           },
+           body: JSON.stringify({ address, products: cardState.card.products }),
+         })
+           .then((res) => res.json())
+           .then((res) => {
+             alertSuccess("Order Placed Successfully");
+             dispatch({ type: "card/clearCard" });
+             setshowOrderPage(false);
+           })
+           .catch((err) => {
+             console.log(err);
+             alertError("Something went wrong to the server. Please try again later");
+           });
+      }
     }
   };
+
+  const addToCard = (product) => {
+    dispatch({ type: "card/addProduct", payload: { ...product, quantity: 1 } });
+    dispatch({ type: "card/calculateTotalPrice" });
+    dispatch({ type: "wishList/deleteProduct", payload: product.id });
+  };
+
+  const deleteProduct = (type: "card" | "wishlist", id: number) => {
+    if (type == "card") dispatch({ type: "card/deleteProduct", payload: id });
+    else dispatch({ type: "wishList/deleteProduct", payload: id });
+  };
+
   return (
     <div className="absolute top-0 w-[100%] h-screen z-50 ">
       <div
@@ -56,40 +101,57 @@ const Bar: React.FC<BarProps> = ({ type, setIsVisible }) => {
         <div className="m-2 h-[82vh] overflow-y-auto">
           {showOrderPage ? (
             <div className="m-3 flex flex-col gap-4">
-              <button className="text-blue-500" onClick={() => setshowOrderPage(false)}>Back to Card</button>
-              <h5>Total Price : </h5>
-              <input type="text" className="w-full p-2 border border-gray-300 rounded mb-4" placeholder="Enter your address" />
+              <button
+                className="text-blue-500"
+                onClick={() => setshowOrderPage(false)}
+              >
+                Back to Card
+              </button>
+              <h5>Total Price : {cardState.card.totalPrice.toFixed(2)} $</h5>
+              <input
+                type="text"
+                className="w-full p-2 border border-gray-300 rounded mb-4"
+                placeholder="Enter your address"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
             </div>
           ) : (
             <>
               {/* products */}
-              <div className="flex gap-5 m-3 border border-gray-400 p-3 relative shadow">
-                <img
-                  className="h-[200px] w-[200px]"
-                  src="https://www.cloud10beauty.com/cdn/shop/products/CeraVe_FaceMoisturizer_BodyMoisturizer_HyaluronicAcid_41409ff4-1a95-42f5-8938-02d4d6f0971f_grande.jpg"
-                  alt="product image"
-                />
-                <div className="flex flex-col my-3 gap-3">
-                  <Link
-                    to={""}
-                    className="text-2xl font-semibold capitalize hover:text-violet-800"
-                  >
-                    {"name of product"}
-                  </Link>
-                  <p>Price Per Unit : {"price"}</p>
-                  <p>Quantity : {"quantity"}</p>
-                  <div className="absolute top-0 right-0">
-                    <button className="text-black p-1 mt-3 mr-3 rounded-full w-auto text-2xl">
-                      <IoCloseCircleSharp />
-                    </button>
-                  </div>
-                  {type == "WISHLIST" && (
-                    <button className="text-white bg-black p-1 mt-3 rounded-md">
-                      Add to Card
-                    </button>
-                  )}
-                </div>
-              </div>
+              {type == "WISHLIST"
+                ? wishList.wishList.products.map((product) => (
+                    <ProductItem product={product}>
+                      <div className="absolute top-0 right-0">
+                        <button className="text-black p-1 mt-1 mr-1 rounded-full w-auto text-2xl">
+                          <IoCloseCircleSharp
+                            onClick={() =>
+                              deleteProduct("wishlist", product.id)
+                            }
+                          />
+                        </button>
+                      </div>
+                      <button
+                        className="text-white bg-black p-1 mt-3 rounded-md"
+                        onClick={() => addToCard(product)}
+                      >
+                        Add to Card
+                      </button>
+                    </ProductItem>
+                  ))
+                : cardState.card.products.map((product) => (
+                    <ProductItem product={product}>
+                      <div className="absolute top-0 right-0">
+                        <button
+                          className="text-black p-1 mt-1 mr-1 
+                        rounded-full w-auto text-2xl"
+                          onClick={() => deleteProduct("card", product.id)}
+                        >
+                          <IoCloseCircleSharp />
+                        </button>
+                      </div>
+                    </ProductItem>
+                  ))}
             </>
           )}
         </div>

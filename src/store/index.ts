@@ -2,14 +2,16 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import userReducer from "./reducers/userSlice";
 import themeReducer from "./reducers/themeSlice";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-// import cartReducer from "./reducers/cartslice.ts";
-// import wishListReducer from "./reducers/wishListSlice";
+import cartReducer from "./reducers/cartslice.ts";
+import wishListReducer from "./reducers/wishLiatslice.ts";
+
 const reducer = combineReducers({
     user: userReducer,
-    theme: themeReducer
-    // cart: cartReducer,
-   // wishList: wishListReducer,
+    theme: themeReducer,
+    card: cartReducer,
+    wishList: wishListReducer,
 })
+
 const store = configureStore({
     reducer
 });

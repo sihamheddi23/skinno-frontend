@@ -17,6 +17,8 @@ type VisibleBar = {
 
 function Header() {
   const userState = useAppSelector((state) => state.user);
+  const cardState = useAppSelector((state) => state.card)
+  const wishList = useAppSelector((state)=> state.wishList)
   const [isVisible, setIsVisible] = useState<VisibleBar>({
     ans: false,
     type: null,
@@ -51,12 +53,14 @@ function Header() {
             </Link>
             {userState.user ? (
               <>
-                <Link
+                {
+                 userState.user.role == "admin" && <Link
                   to="/login"
                   className="text-gray-800 mx-2 flex items-center gap-1"
                 >
                   Your Account
                 </Link>
+              }
                 <Logout />
               </>
             ) : (
@@ -80,11 +84,11 @@ function Header() {
 
             <button className="text-violet-900 flex gap-1 items-center" onClick={showCard}>
               <FaBagShopping />
-              Card(0)
+              Card({cardState.card.products.length})
             </button>
             <button className="text-violet-900 flex gap-1 items-center" onClick={showWishList}>
               <FaHeart />
-              WishList(0)
+              WishList({wishList.wishList.products.length})
             </button>
             <Link
               to="/assisstant/welcome"

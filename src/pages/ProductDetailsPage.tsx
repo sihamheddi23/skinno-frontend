@@ -6,12 +6,14 @@ import { FaHeart } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 import { BASE_URL } from "../api/axiosConfig";
 import { alertError } from "../utils/toasts";
+import { useAppDispatch } from "../store";
 
 type Product = {
   id: number;
   name: string;
   description?: string;
   price: string;
+  quantity: number;
   image_url: string;
   how_to_use?: string;
   ingredients?: string;
@@ -24,17 +26,22 @@ type Product = {
 const ProductDescriptionPage = () => {
   const { productId: id }: any = useParams();
   const [product, setProduct] = useState<Product | undefined>();
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>([]);
+  const [quantity, setQuantity] = useState(1)
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
 
   const fetchProduct = () => {
     fetch(`${BASE_URL}/products/${id}?type=WITH_RECOMMENDATIONS`)
       .then((response) => response.json())
       .then((data) => {
-           setProduct(data.product);
+        setProduct(data.product);
         setRecommendedProducts(data.recommendedProducts);
-       setIsLoading(false)
-     
+        setIsLoading(false);
       })
       .catch((error) => {
         alertError(
@@ -44,12 +51,22 @@ const ProductDescriptionPage = () => {
       });
   };
 
-  useEffect(() => {
-    fetchProduct();
-  }, [id]);
+  const addToCard = () => {
+    dispatch({ type: "card/addProduct", payload: { ...product, quantity } });
+    dispatch({ type: "card/calculateTotalPrice" });
+  };
+
+  const addToWishList = () => {
+    dispatch({ type: "wishList/addProduct", payload: product });
+  };
   if (isLoading) {
-     return <div className="h-screen flex justify-center items-center">Loading...</div>
+    return (
+      <div className="h-screen flex justify-center items-center">
+        Loading...
+      </div>
+    );
   }
+
   return (
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
@@ -69,7 +86,9 @@ const ProductDescriptionPage = () => {
                   alt="company logo"
                   className="w-8 h-8 rounded-xl"
                 />
-                <p className="text-bold">From : {product.company?.name} company</p>
+                <p className="text-bold">
+                  From : {product.company?.name} company
+                </p>
               </div>
               <p className="text-xl text-gray-800 mb-2">
                 ${parseFloat(product.price).toFixed(2)}
@@ -85,17 +104,22 @@ const ProductDescriptionPage = () => {
                   type="number"
                   min="1"
                   className="w-20 p-2 border border-gray-300 rounded"
+                  value={quantity}
+                  max={product.quantity}
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
                 />
               </div>
               <div className="flex gap-3">
-                <button className="text-pink-900 flex gap-1 items-center border border-pink-900 font-bold py-2 px-4 rounded">
+                <button className="text-pink-900 flex gap-1 items-center border
+                 border-pink-900 font-bold py-2 px-4 rounded" onClick={addToWishList}>
                   <FaHeart />
                   Add to WishList
                 </button>
 
-                <button className="text-violet-900 border flex gap-1 items-center  border-violet-900 font-bold py-2 px-4 rounded">
+                <button className="text-violet-900 border flex gap-1 items-center 
+                 border-violet-900 font-bold py-2 px-4 rounded" onClick={addToCard}>
                   <FaBagShopping />
-                  Add to Cart
+                  Add to Card
                 </button>
               </div>
             </div>

@@ -16,6 +16,7 @@ import IsAuthRoute from "./components/routes/IsAuthRoute";
 import OwnCompanyRoute from "./components/routes/OwnCompanyRoute";
 import WelcomeAIAssisstant from "./pages/WelcomeAIAssisstantPage";
 import AddOrUpdateProduct from "./pages/AddOrUpdateProduct";
+import IsAdminRoute from "./components/routes/IsAdminRoute";
 
 function App() {
   return (
@@ -33,22 +34,32 @@ function App() {
           <Route path="/product/:productId" element={<ProductDetailsPage />} />
 
           <Route element={<IsAuthRoute />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route element={<IsAdminRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route
+                path="/dashboard/about-company"
+                element={<CompanyInfoPage />}
+              />
+              <Route element={<OwnCompanyRoute />}>
+                <Route path="/dashboard/products" element={<ProductAdmin />} />
+                <Route
+                  path="/dashboard/add-product"
+                  element={<AddOrUpdateProduct />}
+                />
+                <Route
+                  path="/dashboard/products/:id"
+                  element={<AddOrUpdateProduct />}
+                />
 
-            <Route element={<OwnCompanyRoute />}>
-              <Route path="/dashboard/products" element={<ProductAdmin />} />
-              <Route path="/dashboard/add-product" element={<AddOrUpdateProduct />} />
-              <Route path="/dashboard/products/:id" element={<AddOrUpdateProduct />} />
-
-              <Route path="/dashboard/orders" element={<OrdersPage />} />
+                <Route path="/dashboard/orders" element={<OrdersPage />} />
+              </Route>
             </Route>
-           
-            <Route path="/assisstant/welcome" element={<WelcomeAIAssisstant />} />
-            <Route path="/assisstant/chat/:slug" element={<AIChatPage />} />
+
             <Route
-              path="/dashboard/about-company"
-              element={<CompanyInfoPage />}
+              path="/assisstant/welcome"
+              element={<WelcomeAIAssisstant />}
             />
+            <Route path="/assisstant/chat/:slug" element={<AIChatPage />} />
           </Route>
         </Routes>
       </Router>
