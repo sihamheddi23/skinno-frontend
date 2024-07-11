@@ -8,8 +8,8 @@ function HeroSection() {
     >
       <div className="flex items-center justify-center h-full bg-gray-900 bg-opacity-80">
         <div className="text-center text-white">
-          <h2 className="text-5xl font-bold mb-4">Naturally Radiant Skin</h2>
-          <p className="text-xl mb-8">
+          <h2 className="text-2xl sm:text-5xl font-bold mb-4">Naturally Radiant Skin</h2>
+          <p className="text-lg sm:text-xl mb-8">
             Discover our exclusive range of natural skincare products.
           </p>
           <Link

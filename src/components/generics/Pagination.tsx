@@ -20,10 +20,10 @@ const Pagination: React.FC<PaginationProps> = ({
       : [current_page - 2, current_page - 1];
 
   return (
-    <div className="flex justify-center gap-3 my-3">
+    <div className="flex justify-center gap-3 my-3 flex-wrap">
       {current_page > 1 && (
         <button
-          className="bg-gray-800 text-white px-3 py-1 rounded-full"
+          className="sm:bg-gray-800 sm:text-white px-3 py-1 rounded-full"
           onClick={() => onPageChange(current_page - 1)}
         >
           {"<<"} previous
@@ -32,8 +32,8 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         className={
           current_page == 1
-            ? "bg-violet-800 text-white px-3 py-1 rounded-full"
-            : "bg-gray-800 text-white px-3 py-1 rounded-full"
+            ? "sm:bg-violet-800 text-violet-800 sm:text-white px-3 py-1 rounded-full"
+            : "sm:bg-gray-800 text-gray-800 sm:text-white px-3 py-1 rounded-full"
         }
         onClick={() => onPageChange(1)}
       >
@@ -49,8 +49,8 @@ const Pagination: React.FC<PaginationProps> = ({
               key={page}
               className={
                 page === current_page
-                  ? "bg-violet-800 text-white px-3 py-1 rounded-full"
-                  : "bg-gray-800 text-white px-3 py-1 rounded-full"
+                  ? "text-violet-800 sm:bg-violet-800 sm:text-white px-3 py-1 rounded-full"
+                  : "text-violet-800 sm:bg-gray-800 sm:text-white px-3 py-1 rounded-full"
               }
             >
               {page}
@@ -61,8 +61,8 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         className={
           current_page == pages
-            ? "bg-violet-800 text-white px-3 py-1 rounded-full"
-            : "bg-gray-800 text-white px-3 py-1 rounded-full"
+               ? "text-violet-800 sm:bg-violet-800 sm:text-white px-3 py-1 rounded-full"
+                  : "text-violet-800 sm:bg-gray-800 sm:text-white px-3 py-1 rounded-full"
         }
         onClick={() => onPageChange(pages)}
       >
@@ -71,7 +71,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
       {current_page < pages && (
         <button
-          className="bg-gray-800 text-white px-3 py-1 rounded-full"
+          className="sm:bg-gray-800 sm:text-white px-3 py-1 rounded-full"
           onClick={() => onPageChange(current_page + 1)}
         >
           next {">>"}

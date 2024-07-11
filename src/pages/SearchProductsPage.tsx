@@ -157,8 +157,8 @@ const SearchProductPage = () => {
   return (
     <div className="bg-gray-100 ">
       <Header />
-      <div className="min-h-screen w-screen p-8 ">
-        <div className="mx-8 bg-white p-6 rounded-lg shadow-lg">
+      <div className="min-h-screen w-screen p-2 sm:p-8 ">
+        <div className=" sm:mx-8 bg-white p-6 rounded-lg shadow-lg">
           <h2 className="text-2xl font-bold mb-4">Search Products</h2>
           <input
             type="text"

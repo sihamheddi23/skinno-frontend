@@ -4,7 +4,7 @@ function GetInTouch() {
   return (
     <section id="contact" className="py-16">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-bold text-center mb-8">Get in Touch</h2>
+        <h2 className="text-2xl sm:text-4xl font-bold text-center mb-8">Get in Touch</h2>
         <form className="max-w-2xl mx-auto">
           <div className="mb-4">
             <label

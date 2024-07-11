@@ -71,12 +71,12 @@ const ProductDescriptionPage = () => {
     <div className="bg-gray-100 min-h-screen">
       <Navbar />
       {product !== undefined ? (
-        <div className=" m-8 bg-white p-6 rounded-lg shadow-lg mt-8">
-          <div className="flex flex-col sm:flex-row">
+        <div className="m-2 sm:m-8 bg-white p-6 rounded-lg shadow-lg">
+          <div className="flex flex-col-reverse lg:flex-row">
             <img
               src={product.image_url}
               alt={product.name}
-              className="w-full sm:w-1/2 h-auto object-cover rounded-lg"
+              className="w-full lg:w-1/2 h-auto object-cover rounded-lg"
             />
             <div className="sm:ml-6 mt-4 sm:mt-0">
               <h2 className="text-3xl font-bold mb-4">{product.name}</h2>

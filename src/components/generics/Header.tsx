@@ -9,6 +9,7 @@ import { useAppSelector } from "../../store";
 import Logout from "../admin/Logout";
 import { useState } from "react";
 import Bar from "./Bar";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 type VisibleBar = {
   ans: boolean;
@@ -18,7 +19,8 @@ type VisibleBar = {
 function Header() {
   const userState = useAppSelector((state) => state.user);
   const cardState = useAppSelector((state) => state.card)
-  const wishList = useAppSelector((state)=> state.wishList)
+  const wishList = useAppSelector((state) => state.wishList)
+  const [isVisibleMenu, setisVisibleMenu] = useState(false)
   const [isVisible, setIsVisible] = useState<VisibleBar>({
     ans: false,
     type: null,
@@ -40,13 +42,18 @@ function Header() {
   };
   return (
     <header className="bg-white py-6 shadow-md w-full">
-      <div className="w-[100%]  mx-5 px-4 flex justify-between items-center">
+      <div className="w-[100%]  mx-5 px-4 flex flex-col lg:flex-row lg:justify-between lg:items-center">
         <div className="flex items-center">
           <Logo />
           <h1 className="text-xl font-semibold text-gray-900 ml-2">Skinno</h1>
+          <button className="text-xl ml-auto mr-7 lg:hidden" onClick={() => setisVisibleMenu(!isVisibleMenu)}>
+              <GiHamburgerMenu />
+          </button>
         </div>
-        <nav className="flex ml-auto items-center justify-end">
-          <div className="flex justify-end gap-2 ml-9 items-center">
+        <nav className={
+          isVisibleMenu?"bg-white flex flex-col text-[14px] sm:text-xl ":"hidden lg:flex lg:text-[16px] lg:flex-row lg:ml-auto lg:items-center lg:justify-end"
+        }>
+          <div className="flex flex-col justify-start py-4 lg:py-0 lg:flex-row lg:justify-end gap-2 lg:ml-9 lg:items-center">
             <Link to="/" className="text-gray-800 flex items-center gap-1">
               <IoHomeOutline />
               Home
@@ -55,8 +62,8 @@ function Header() {
               <>
                 {
                  userState.user.role == "admin" && <Link
-                  to="/login"
-                  className="text-gray-800 mx-2 flex items-center gap-1"
+                  to="/dashboard"
+                  className="text-gray-800 lg:mx-2 flex items-center gap-1"
                 >
                   Your Account
                 </Link>
@@ -67,7 +74,7 @@ function Header() {
               <>
                 <Link
                   to="/login"
-                  className="text-gray-800 mx-2 flex items-center gap-1"
+                  className="text-gray-800 lg:mx-2 flex items-center gap-1"
                 >
                   <CiUser />
                   Login
@@ -92,12 +99,12 @@ function Header() {
             </button>
             <Link
               to="/assisstant/welcome"
-              className="bg-gray-800 text-white p-[0.6em] rounded-xl mx-4 flex gap-2 items-center"
+              className="lg:bg-gray-800 lg:text-white lg:p-[0.6em] rounded-xl lg:mx-4 flex gap-2 items-center"
             >
               <FaRobot />
 
               <span> Talk To AI Assistant </span>
-              <small className="bg-violet-900 p-1 mx-1 rounded-md flex gap-1">
+              <small className="lg:bg-violet-900 lg:p-1 mx-1 rounded-md flex gap-1">
                 <img src={gemini} alt="gemini" width={15} height={15} />
                 <span>Powerd By Gemini</span>
               </small>
