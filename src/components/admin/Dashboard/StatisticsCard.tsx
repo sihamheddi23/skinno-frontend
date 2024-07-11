@@ -4,7 +4,7 @@ import { MdOutlineCardGiftcard, MdProductionQuantityLimits } from 'react-icons/m
 import { useAppSelector } from '../../../store';
 
 
-function StatisticsCard() {
+function StatisticsCard({totalProfit, total_orders, total_stock}) {
   const themeState = useAppSelector((state) => state.theme);
   return (
          <div className="grid grid-cols-3 gap-4">
@@ -13,7 +13,7 @@ function StatisticsCard() {
             <h2 className="flex flex-col text-lg font-medium">
               Products In Stock
             </h2>
-            <p>{23} Products</p>
+            <p>{total_stock} Products</p>
           </div>
           <div className="text-5xl text-blue-500">
             <MdProductionQuantityLimits />
@@ -22,7 +22,7 @@ function StatisticsCard() {
         <div className={themeState.theme === "light" ? "border-b-4 border-orange-600 flex  justify-between items-center p-4 rounded  bg-white" : "border-b-4 border-orange-600 flex  justify-between items-center p-4 rounded  bg-gray-700 text-white"}>
           <div>
             <h2 className="flex flex-col text-lg font-medium">Orders</h2>
-            <p>{23} Orders</p>
+            <p>{total_orders} Orders</p>
           </div>
           <div className="text-5xl text-orange-500">
             <MdOutlineCardGiftcard />
@@ -32,7 +32,7 @@ function StatisticsCard() {
         <div className={themeState.theme === "light" ? "border-b-4 border-violet-600 flex  justify-between items-center p-4 rounded  bg-white" : "border-b-4 border-violet-600 flex  justify-between items-center p-4 rounded  bg-gray-700 text-white"}>
           <div>
             <h2 className="flex flex-col text-lg font-medium">Total Revenue</h2>
-            <p>{23} $</p>
+            <p>{totalProfit} $</p>
           </div>
           <div className="text-5xl text-violet-500">
             <FaRegMoneyBillAlt />
