@@ -113,13 +113,13 @@ const ProductDescriptionPage = () => {
                 <button className="text-pink-900 flex gap-1 items-center border
                  border-pink-900 font-bold py-2 px-4 rounded" onClick={addToWishList}>
                   <FaHeart />
-                  Add to WishList
+                  <span className="hidden sm:block">Add to WishList</span>
                 </button>
 
                 <button className="text-violet-900 border flex gap-1 items-center 
                  border-violet-900 font-bold py-2 px-4 rounded" onClick={addToCard}>
                   <FaBagShopping />
-                  Add to Card
+                  <span className="hidden sm:block"> Add to Card</span>
                 </button>
               </div>
             </div>

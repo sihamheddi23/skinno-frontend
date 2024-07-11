@@ -14,11 +14,11 @@ const Form: React.FC<FormProps> = ({ children, title, onSubmit }) => {
         <div
           className={
             theme === "light"
-              ? " mx-6 bg-white p-6  rounded-lg shadow-lg my-8"
-              : "mx-6 bg-gray-900 p-6 rounded-lg shadow-lg my-8 text-white"
+              ? " mx-6 bg-white p-6  rounded-lg shadow-lg my-8 max-h-[1200px]"
+              : "mx-6 bg-gray-900 p-6 rounded-lg shadow-lg my-8 text-white max-h-[1200px]"
           }
         >
-          <h2 className="text-2xl font-bold mb-4">
+          <h2 className="text-xl md:text-2xl font-bold mb-4">
             {title}
           </h2>
           <form onSubmit={onSubmit}>

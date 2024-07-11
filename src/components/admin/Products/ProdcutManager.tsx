@@ -83,7 +83,7 @@ function ProdcutManager() {
   };
 
   return (
-    <div className="p-4">
+    <div className="p-4 h-screen">
       <div className="flex justify-between mx-4 my-4">
         <h1 className="text-2xl font-bold mb-4">Products</h1>
         <Link to={"/dashboard/add-product"} className="bg-violet-950 py-3 px-2 text-white rounded">

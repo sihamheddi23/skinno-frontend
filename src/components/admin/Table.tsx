@@ -1,9 +1,6 @@
-import {useState} from 'react';
 import { AgGridReact } from '@ag-grid-community/react';;
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-
-import { ColDef, ColGroupDef } from '@ag-grid-community/core';
 import { useAppSelector } from '../../store';
 
 type TableProps = {
@@ -18,8 +15,7 @@ const Table: React.FC<TableProps> = ({ rowData, columnDefs}) => {
 return (
   <div style={{ width: '100%', height: '500px' }}>
     <div
-      style={{ width: '100%', height: '100%' }}
-      className={themeState.theme === "light" ? "ag-theme-quartz" : "ag-theme-quartz-dark"}
+      className={themeState.theme === "light" ? "ag-theme-quartz w-[700px] md:w-full h-full" : " w-[700px] md:w-full h-full ag-theme-quartz-dark"}
     >
       <AgGridReact rowData={rowData} columnDefs={columnDefs} />
     </div>

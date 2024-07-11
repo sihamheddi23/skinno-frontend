@@ -11,6 +11,7 @@ import TextArea from "../components/admin/TextArea";
 import { BASE_URL } from "../api/axiosConfig";
 import { alertError, alertSuccess } from "../utils/toasts";
 import { useNavigate, useParams } from "react-router-dom";
+import GeneralAdminUI from "../components/admin/GeneralAdminUI";
 
 const ProductSchema = Yup.object().shape({
   name: Yup.string().required("name field is required").min(4).max(45),
@@ -129,16 +130,8 @@ const AddOrUpdateProduct = () => {
   
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div
-        className={
-          themeState.theme === "light"
-            ? "flex flex-col flex-grow bg-slate-100 "
-            : "flex flex-col flex-grow text-white bg-gray-800"
-        }
-      >
-        <Header />
+   
+     <GeneralAdminUI>
         <Form title={params.id ? "Update Product" : "Add Product"} onSubmit={formik.handleSubmit}>
           <Input
             theme={themeState.theme}
@@ -219,8 +212,7 @@ const AddOrUpdateProduct = () => {
           />
           <SubmitButton name={params.id ? "Update" : "Add"} />
         </Form>
-      </div>
-    </div>
+  </GeneralAdminUI>
   );
 };
 

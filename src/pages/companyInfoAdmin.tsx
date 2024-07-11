@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import Sidebar from "../components/admin/Sidebar";
-import Header from "../components/admin/Header";
 import { useAppDispatch, useAppSelector } from "../store";
 import Form from "../components/admin/Form";
 import Input from "../components/admin/Input";
@@ -9,6 +7,7 @@ import * as Yup from "yup";
 import { addCompanyInfo, updateCompanyInfo } from "../store/reducers/userSlice";
 import { alertSuccess } from "../utils/toasts";
 import SubmitButton from "../components/generics/SubmitButton";
+import GeneralAdminUI from "../components/admin/GeneralAdminUI";
 
 const companySchema = Yup.object().shape({
   name: Yup.string().required("Above field is required"),
@@ -59,16 +58,7 @@ const CompanyInfoPage = () => {
     validationSchema: companySchema,
   });
   return (
-    <div className="flex">
-      <Sidebar />
-      <div
-        className={
-          themeState.theme === "light"
-            ? "flex flex-col flex-grow bg-slate-100"
-            : "flex flex-col flex-grow text-white bg-gray-800"
-        }
-      >
-        <Header />
+      <GeneralAdminUI>
         <Form title="Update Company Information" onSubmit={formik.handleSubmit}>
           <Input
             theme={themeState.theme}
@@ -127,8 +117,7 @@ const CompanyInfoPage = () => {
           <SubmitButton name={userState.loadingCompany ? "Updating..." : "Update"} />
 
         </Form>
-      </div>
-    </div>
+     </GeneralAdminUI>
   );
 };
 

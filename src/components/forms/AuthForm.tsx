@@ -10,8 +10,8 @@ type AuthFormProps = {
 const AuthForm: React.FC<AuthFormProps> = ({ type, children, onSubmit }) => {
     
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md my-9">
+    <div className="min-h-screen flex items-center px-3 sm:justify-center bg-gray-100">
+      <div className="bg-white p-4 sm:p-8 rounded-lg shadow-lg w-full sm:max-w-md my-9">
         <div className="mb-2">
           <Link to="/" className="text-blue-500">
             Back to Home

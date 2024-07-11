@@ -79,14 +79,14 @@ const Bar: React.FC<BarProps> = ({ type, setIsVisible }) => {
         className="absolute top-0 bg-black opacity-55 w-full h-full"
         onClick={hideBar}
       ></div>
-      <div className="absolute top-0 right-0 bg-white w-[45%] h-full ">
+      <div className="absolute top-0 right-0 bg-white w-[90%] sm:w-[70%] lg:w-[45%] h-full ">
         <div className="flex gap-1 m-4 border-b border-gray-400 pb-3 ">
-          <button className="mr-[30%] text-2xl" onClick={hideBar}>
+          <button className="mr-[20%] sm:mr-[30%] text-xl sm:text-2xl" onClick={hideBar}>
             <IoCloseSharp />
           </button>
-          <h3 className="text-3xl font-semibold">
+          <h3 className="text-2xl sm:text-3xl font-semibold">
             {type == "WISHLIST" ? (
-              <div className="flex gap-1 items-center">
+              <div className="flex gap-1 justify-center flex-wrap items-center">
                 <LuHeart />
                 <span>Your WishList</span>
               </div>
@@ -120,10 +120,10 @@ const Bar: React.FC<BarProps> = ({ type, setIsVisible }) => {
             <>
               {/* products */}
               {type == "WISHLIST"
-                ? wishList.wishList.products.map((product) => (
-                    <ProductItem product={product}>
+                ? wishList.wishList.products.map((product, index) => (
+                    <ProductItem product={product} key={index}>
                       <div className="absolute top-0 right-0">
-                        <button className="text-black p-1 mt-1 mr-1 rounded-full w-auto text-2xl">
+                        <button className="text-black p-1 mt-1 mr-1 rounded-full w-auto text-xl md:text-2xl">
                           <IoCloseCircleSharp
                             onClick={() =>
                               deleteProduct("wishlist", product.id)
@@ -139,12 +139,12 @@ const Bar: React.FC<BarProps> = ({ type, setIsVisible }) => {
                       </button>
                     </ProductItem>
                   ))
-                : cardState.card.products.map((product) => (
-                    <ProductItem product={product}>
+                : cardState.card.products.map((product, index) => (
+                    <ProductItem product={product} key={index}>
                       <div className="absolute top-0 right-0">
                         <button
                           className="text-black p-1 mt-1 mr-1 
-                        rounded-full w-auto text-2xl"
+                        rounded-full w-auto text-xl md:text-2xl"
                           onClick={() => deleteProduct("card", product.id)}
                         >
                           <IoCloseCircleSharp />

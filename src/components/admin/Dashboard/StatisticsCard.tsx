@@ -7,7 +7,7 @@ import { useAppSelector } from '../../../store';
 function StatisticsCard({totalProfit, total_orders, total_stock}) {
   const themeState = useAppSelector((state) => state.theme);
   return (
-         <div className="grid grid-cols-3 gap-4">
+         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className={themeState.theme === "light" ? "border-b-4 border-blue-600 flex  justify-between items-center p-4 rounded  bg-white" : "border-b-4 border-blue-600 flex  justify-between items-center p-4 rounded  bg-gray-700 text-white"}>
           <div>
             <h2 className="flex flex-col text-lg font-medium">
