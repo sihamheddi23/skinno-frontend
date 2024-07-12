@@ -86,7 +86,7 @@ function RoomsList() {
   };
 
   return (
-    <div className="col-span-1 border-r border-gray-300">
+    <div className="w-full md:col-span-1  md:w-auto md:border-r md:border-gray-300">
       {showCreateInput ? (
         <div className="flex gap-1 items-center">
           <input
@@ -120,7 +120,7 @@ function RoomsList() {
         </button>
       )}
 
-      <div className="text-gray-700 my-4 flex flex-col ">
+      <div className="text-gray-700 my-4 flex flex-col max-h-[140px] overflow-y-auto md:max-h-[90%]">
         {rooms.length > 0 &&
           rooms?.map((room, index) => (
             <div

@@ -20,7 +20,7 @@ import IsAdminRoute from "./components/routes/IsAdminRoute";
 
 function App() {
   return (
-    <div>
+    <div className="w-[100%]">
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />

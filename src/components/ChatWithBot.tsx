@@ -61,9 +61,9 @@ const ChatWithBot: React.FC<ChatWithBotInputProps> = ({ socket }) => {
     }
   };
   return (
-    <div className="col-span-3 m-8">
+    <div className="m-2 md:col-span-3 md:m-8">
       <h2 className="text-2xl font-bold mb-4">Chat with AI Assistant</h2>
-      <div className="bg-gray-200 p-4 rounded-lg mb-4 h-[500px] overflow-y-scroll">
+      <div className="bg-gray-200 p-4 rounded-lg mb-4 h-[700px] md:h-[900px] lg:h-[700px] overflow-y-scroll">
         {messages.map((message: any, index: number) => (
           <div
             key={index}
@@ -100,7 +100,7 @@ const ChatWithBot: React.FC<ChatWithBotInputProps> = ({ socket }) => {
           </div>
         ))}
       </div>
-      <div className="flex gap-2">
+      <div className="flex gap-2 flex-wrap">
         <input
           type="text"
           value={input}
