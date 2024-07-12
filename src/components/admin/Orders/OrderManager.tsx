@@ -32,7 +32,7 @@ const SelectOrderStatus = (props) => {
         body: JSON.stringify({ status: e.target.value }),
       })
         .then((res) => res.json())
-        .then((res) => {
+        .then(() => {
           alertSuccess("Status updated successfully");
         })
         .catch((err) => {

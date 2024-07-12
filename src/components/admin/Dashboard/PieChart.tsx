@@ -1,4 +1,3 @@
-import React from 'react'
 import CanvasJSReact from '@canvasjs/react-charts';
 import { useAppSelector } from '../../../store';
 

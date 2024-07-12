@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppSelector } from "../../store";
 import Sidebar from "./Sidebar";
 import Header from "./Header";

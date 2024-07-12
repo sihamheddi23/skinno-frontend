@@ -6,7 +6,6 @@ import {
 } from "react-icons/io5";
 import { LuHeart } from "react-icons/lu";
 import { MdCardGiftcard } from "react-icons/md";
-import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store";
 import ProductItem from "./ProductItem";
 import { BASE_URL } from "../../api/axiosConfig";
@@ -49,7 +48,7 @@ const Bar: React.FC<BarProps> = ({ type, setIsVisible }) => {
            body: JSON.stringify({ address, products: cardState.card.products }),
          })
            .then((res) => res.json())
-           .then((res) => {
+           .then(() => {
              alertSuccess("Order Placed Successfully");
              dispatch({ type: "card/clearCard" });
              setshowOrderPage(false);

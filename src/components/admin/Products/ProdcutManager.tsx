@@ -17,7 +17,7 @@ const CustomButtonComponent = (props) => {
        },
      })
        .then((res) => res.json())
-       .then((res) => {
+       .then(() => {
          alertSuccess("Product Deleted Successfully");
          setTimeout(() => {
            window.location.reload();

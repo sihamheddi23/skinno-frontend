@@ -1,4 +1,3 @@
-import React from 'react'
 import { FaRegMoneyBillAlt } from 'react-icons/fa'
 import { MdOutlineCardGiftcard, MdProductionQuantityLimits } from 'react-icons/md'
 import { useAppSelector } from '../../../store';

@@ -72,7 +72,7 @@ function RoomsList() {
       },
     })
       .then((res) => res.json())
-      .then((res) => {
+      .then(() => {
         setrooms(rooms.filter((room) => room.slug !== slug));
         alertSuccess("Room deleted successfully");
         navigate("/assisstant/welcome");
