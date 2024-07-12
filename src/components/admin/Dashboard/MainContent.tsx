@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import StatisticsCard from "./StatisticsCard";
 import TopFiveBarChart from "./TopFiveBarChart";

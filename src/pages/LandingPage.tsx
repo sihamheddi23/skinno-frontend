@@ -1,7 +1,6 @@
 import Footer from "../components/Footer";
 import Header from "../components/generics/Header";
 import AboutUs from "../components/main/AboutUs";
-import BestSellers from "../components/main/BestSellers";
 import GetInTouch from "../components/main/GetInTouch";
 import HeroSection from "../components/main/HeroSection";
 

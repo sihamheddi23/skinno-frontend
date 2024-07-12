@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import Sidebar from "../components/admin/Sidebar";
-import Header from "../components/admin/Header";
 import { useAppSelector } from "../store";
 import Form from "../components/admin/Form";
 import Input from "../components/admin/Input";

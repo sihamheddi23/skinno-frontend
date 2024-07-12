@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import Cookie from "js-cookie";
-import { number } from "yup";
 
 type Product = {
   id: number;

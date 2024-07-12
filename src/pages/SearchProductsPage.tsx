@@ -3,7 +3,6 @@ import Header from "../components/generics/Header";
 import Footer from "../components/Footer";
 import ProductCard from "../components/generics/ProductCard";
 import { BASE_URL } from "../api/axiosConfig";
-import { alertError } from "../utils/toasts";
 import Pagination from "../components/generics/Pagination";
 
 const SearchProductPage = () => {

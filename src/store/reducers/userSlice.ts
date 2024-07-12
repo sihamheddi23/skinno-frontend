@@ -1,6 +1,6 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Cookie from "js-cookie";
-import { axiosConfig, BASE_URL } from "../../api/axiosConfig";
+import {  BASE_URL } from "../../api/axiosConfig";
 import { alertError } from "../../utils/toasts";
 
 type LoginInput = {

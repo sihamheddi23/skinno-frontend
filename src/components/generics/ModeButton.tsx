@@ -1,4 +1,3 @@
-import React from "react";
 import { CiDark, CiLight } from "react-icons/ci";
 import { useAppDispatch, useAppSelector } from "../../store";
 
